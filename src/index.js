@@ -12,6 +12,12 @@ app.use(rateLimit({
     max: process.env.RATE_LIMIT_MAX,
 }))
 app.use(bodyParser.json())
+app.use((err, req, res, next) => {
+  if (error !== null) {
+    return response.json({ 'invalid': 'json' });
+  }
+  return next();
+});
 app.use(cors())
 app.use("/api/as/maintainer/", require("./asMaintainer"))
 app.use("/api/as/composer/", require("./asComposer"))
