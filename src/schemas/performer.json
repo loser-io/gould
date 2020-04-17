@@ -1,0 +1,8 @@
+{
+    "$id": "performer.json",
+    "required": ["name"],
+    "properties": {
+        "name": { "type": "string" },
+        "apiKey": { "type": "string" }
+    }
+}

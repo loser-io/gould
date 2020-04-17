@@ -1,0 +1,51 @@
+{
+    "$id": "opus.json",
+    "type": "object",
+    "required": ["events"],
+    "properties": {
+        "submitted": { "type": "string", "format": "date-time" },
+        "completed": { "type": "string", "format": "date-time" },
+        "recordingKey": { "type": "string" },
+        "composerId": { "type": "string" },
+        "performerId": { "type": "string" },
+        "status": {"$ref": "status.json"},
+        "events": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "ts": { "type": "number" },
+                    "type": { "enum": ["KEY_DOWN", "KEY_UP", "PEDAL"] },
+                    "note": { "type": "number" },
+                    "velocity": { "type": "number" },
+                    "pedalType": {
+                        "type": "string",
+                        "enum": [
+                            "DAMPER",
+                            "SOSTENUTO",
+                            "UNA_CORDA",
+                            "BASS_DAMPER",
+                            "MUFFLE_RAIL",
+                            "HALF_BLOW"
+                        ]
+                    },
+                    "pedalValue": { "type": "number" }
+                },
+                "anyOf": [
+                    {
+                        "properties": { "type": { "const": "KEY_DOWN" } },
+                        "required": ["ts", "note", "velocity"]
+                    },
+                    {
+                        "properties": { "type": { "const": "KEY_UP" } },
+                        "required": ["ts", "note", "velocity"]
+                    },
+                    {
+                        "properties": { "type": { "const": "KEY_UPPEDAL" } },
+                        "required": ["ts", "pedalType", "pedalValue"]
+                    }
+                ]
+            }
+        }
+    }
+}

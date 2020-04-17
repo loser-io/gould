@@ -1,0 +1,25 @@
+{
+    "$id": "composer.json",
+    "required": [
+        "email",
+        "password"
+    ],
+    "properties": {
+        "email": {
+            "type": "string"
+        },
+        "password": {
+            "type": "string"
+        },
+        "stripeId": {
+            "type": "string"
+        },
+        "joined": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "apiKey": {
+            "type": "string"
+        }
+    }
+}

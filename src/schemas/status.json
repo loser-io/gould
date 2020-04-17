@@ -1,0 +1,5 @@
+{
+    "$id": "status.json",
+    "type": "string",
+    "enum": ["AVAILABLE", "RECORDING", "COMPLETED"]
+}
