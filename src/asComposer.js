@@ -3,7 +3,7 @@ const router = require("express").Router()
 const {composers, opuses} = require("./mongo")
 const _ = require("lodash")
 
-router.use((req, res, next) => {
+router.use(async (req, res, next) => {
     let apiKey = _.get(req.headers.authorization.split(" "),  1, "")
     composer = await composers()
         .findOne({ apiKey  })

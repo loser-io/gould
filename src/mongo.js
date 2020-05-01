@@ -15,9 +15,7 @@ let _opuses
 let _performers
 const initMc = async () => {
     if (!_mc) {
-        console.log(`mongoConnStr: ${MONGO_CONN_STR}`)
         _mc = await MongoClient.connect(MONGO_CONN_STR, MONGO_OPTIONS)
-        console.log("initialized mongo connection: " + _mc.toString())
         _composers = _mc.db("loser").collection("composers")
         _opuses = _mc.db("loser").collection("opuses")
         _performers = _mc.db("loser").collection("performers")
