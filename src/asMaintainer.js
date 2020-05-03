@@ -35,7 +35,7 @@ router.post("/composer/", async (req, res, next) => {
             res.status(200).send("OK")
 
             sgMail.send({
-                to: composer.email,
+                to: composerRecord.email,
                 from: "gould@loserio.cloud",
                 subject: `Your loser.io API Key`,
                 text: `Thank you for registering for the beta of loser.io. \n\nYour API key is: ${apiKey}.To get started as quickly as possible, check out our tutorial https://gist.github.com/lh00000000/2611d78df4b8bd39221914224c8a3047, our documentation https://app.swaggerhub.com/apis-docs/loserio/loser/1.0.0, and our engineering blog https://medium.com/loser-io-engineering-blog .`,
