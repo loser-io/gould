@@ -21,6 +21,7 @@ const schemas = {
 
 const ajv = new Ajv({
     allErrors: true,
-    schemas: Object.values(schemas).map(sch => require(sch.path))
+    schemas: Object.values(schemas).map(sch => require(sch.path)),
+    coerceTypes: true
  })
 module.exports = (type, obj) => ajv.getSchema(schemas[type].id)(obj)
