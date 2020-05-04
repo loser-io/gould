@@ -1,8 +1,9 @@
 const MongoClient = require("mongodb").MongoClient
 const ObjectId = require("mongodb").ObjectId
-const MONGO_CONN_STR = `mongodb+srv://${process.env.MONGO_USER}:${
-    process.env.MONGO_PW
-}@${process.env.MONGO_HOST}/test?retryWrites=true&w=majority`
+
+const MONGO_CONN_STR = `mongodb+srv://${process.env.GOULD_MONGO_USER}:${
+    process.env.GOULD_MONGO_PW
+}@${process.env.GOULD_MONGO_HOST}/test?retryWrites=true&w=majority`
 
 const MONGO_OPTIONS = {
     useNewUrlParser: true,

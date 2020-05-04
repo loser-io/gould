@@ -5,13 +5,13 @@ const _ = require("lodash")
 const AWS = require("aws-sdk")
 const sgMail = require("@sendgrid/mail")
 
-sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+sgMail.setApiKey(process.env.GOULD_SENDGRID_API_KEY)
 
 const spacesEndpoint = new AWS.Endpoint("nyc3.digitaloceanspaces.com")
 let s3 = new AWS.S3({
     endpoint: spacesEndpoint,
-    accessKeyId: process.env.S3_KEY_ID,
-    secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
+    accessKeyId: process.env.GOULD_S3_KEY_ID,
+    secretAccessKey: process.env.GOULD_S3_SECRET_ACCESS_KEY,
 })
 
 const getAssignedI = async (performerId) => {
@@ -82,7 +82,7 @@ router.get("/destination", rejectIfNoAssignment, async (req, res, next) => {
     let assignedId = res.locals.assigned._id.toString()
 
     const url = s3.getSignedUrl("putObject", {
-        Bucket: process.env.BUCKET_NAME,
+        Bucket: process.env.GOULD_BUCKET_NAME,
         Key: `${assignedId}.wav`,
         ContentType: "audio/wav",
         Expires: 3600,
@@ -94,7 +94,7 @@ router.get("/destination", rejectIfNoAssignment, async (req, res, next) => {
 router.post("/confirmation", rejectIfNoAssignment, async (req, res, next) => {
     let opusId = res.locals.assigned._id.toString()
     let exists = await (async () => {
-        let s3Params = { Bucket: process.env.BUCKET_NAME, Key: `${opusId}.wav` }
+        let s3Params = { Bucket: process.env.GOULD_BUCKET_NAME, Key: `${opusId}.wav` }
         return new Promise((resolve) => {
             s3.headObject(s3Params, (err, data) => {
                 resolve(!err)
@@ -118,7 +118,7 @@ router.post("/confirmation", rejectIfNoAssignment, async (req, res, next) => {
         let confirm = await new Promise((resolve) =>
             s3.putObjectAcl(
                 {
-                    Bucket: process.env.BUCKET_NAME,
+                    Bucket: process.env.GOULD_BUCKET_NAME,
                     Key: `${opusId}.wav`,
                     ACL: "public-read",
                 },

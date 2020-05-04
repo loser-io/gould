@@ -5,14 +5,13 @@ const _ = require("lodash")
 
 router.use(async (req, res, next) => {
     let apiKey = _.get(req.headers.authorization.split(" "),  1, "")
-    composer = await composers()
-        .findOne({ apiKey  })
-    if (composer === undefined) {
-        res.status(403)
-        res.end()
-    } else {
+    composer = await composers().findOne({ apiKey })
+    if (composer) {
         res.locals.composer = composer
         res.locals.composerId = composer._id.toString()
+    } else {
+        res.status(403)
+        res.end()
     }
 
     next()
@@ -21,7 +20,6 @@ router.use(async (req, res, next) => {
 router.post("/opus", async (req, res, next) => {
     try {
         if (validate("opus", req.body)) {
-
             let newOpus = {
                 events: req.body.events,
                 submitted: new Date(),
@@ -37,8 +35,10 @@ router.post("/opus", async (req, res, next) => {
                     count: req.body.events.length
                 }
             })
-        }
 
+        } else {
+            throw "Opus not valid"
+        }
     } catch (err) {
         next(err)
     }

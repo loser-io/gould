@@ -5,12 +5,12 @@ const SHA256 = require("crypto-js/sha256")
 const { v4: uuidv4 } = require("uuid")
 const sgMail = require("@sendgrid/mail")
 
-sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+sgMail.setApiKey(process.env.GOULD_SENDGRID_API_KEY)
 const newApiKey = (prefix) => prefix + Buffer.from(uuidv4()).toString("base64")
 
 const isAuthentic = (authHeader) =>
     SHA256(authHeader.split(" ")[1]).toString() ===
-    process.env.MAINTAINER_SECRET
+    process.env.GOULD_MAINTAINER_SECRET
 
 router.get("/", async (req, res, next) => {
     res.send("OK")
